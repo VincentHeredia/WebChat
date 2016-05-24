@@ -1,8 +1,9 @@
-from django.shortcuts import render, get_object_or_404
-from django.views import generic
+from django.shortcuts import render
+from django.template import loader
 
 # Create your views here.
 
 
-class IndexView(generic.ListView):
-	template_name = "chat/index.html"
+def index(request):
+    template = loader.get_template('chat/index.html')
+    return render(request, 'chat/index.html')
