@@ -10,7 +10,7 @@
 </head>
 <body>
 	<div id="wrapper">
-		<section id="login" class="blockEle Center-Container">
+		<section id="login" class="Center-Container">
 			<div class="Absolute-Center">
 				<h1>Login</h1>
 				<p>Please enter your user name (not your real name).</p>
@@ -21,12 +21,43 @@
 				<div class="blockEle inputBlock">
 					<input type="button" value="Submit" id="submitName">
 				</div>
-				</div>
 			</div>
 		</section>
 		
-		<section id="chatWindow" class="blockEle">
-			
+		<section id="chatWindow">
+			<div id="outerChatLayer">
+				<div id="topInfo">
+					<div>Name:<span id="nameDisplay"></span></div>
+				</div>
+				
+				<div id="chatEle">
+					<div class="message">
+						<div class="chatUserName">UserName:</div>
+						<div class="chatMessage">This is a message</div>
+					</div>
+					<div class="message">
+						<div class="chatUserName">UserName:</div>
+						<div class="chatMessage">This is a message</div>
+					</div>
+					<div class="message">
+						<div class="chatUserName">UserName:</div>
+						<div class="chatMessage">This is a message</div>
+					</div>
+					<div class="message">
+						<div class="chatUserName">UserName:</div>
+						<div class="chatMessage">This is a message</div>
+					</div>
+					<div class="message">
+						<div class="chatUserName">UserName:</div>
+						<div class="chatMessage">This is a message</div>
+					</div>
+				</div>
+				
+				<div id="messageInputEle">
+					<input type="text" name="inputMessage" id="inputMessage" value="" placeholder="Type Here...">	
+					<input type="button" value="Send" id="submitMessage">
+				</div>
+			</div>
 		</section>
 	</div>
 </body>
