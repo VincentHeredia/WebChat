@@ -1,7 +1,7 @@
+from __future__ import unicode_literals
+
 from django.db import models
 from django.utils import timezone
-
-from __future__ import unicode_literals
 
 
 # Create your models here.
@@ -31,8 +31,8 @@ class Message(models.Model):
 		return '[{timestamp}] {handle}: {message}'.format(**self.as_dict())
 	
 	@property
-    def formatted_timestamp(self):
-        return self.timestamp.strftime('%b %-d %-I:%M %p')
+	def formatted_timestamp(self):
+		return self.timestamp.strftime('%b %-d %-I:%M %p')
 	
 	def as_dict(self):
 		return {'handle': self.handle, 'message': self.message, 'timestamp': self.formatted_timestamp}
