@@ -8,19 +8,11 @@ $(function() {
 	var ws_scheme = window.location.protocol == "https:" ? "wss" : "ws";
 	var chatSocket = new ReconnectingWebSocket(ws_scheme + '://' + window.location.host + "/chatsocket/");
 	var chatMessageCount = 0;
-		
-	chatSocket.onopen = function () {
-		console.log("Opened Socket");
-	}
 	
 	chatSocket.onmessage = function(message){
-		console.log("Recieved Message");
-		
 		var data = JSON.parse(message.data);//get data
 		var chatWindow = $("#chatEle");
 		
-		console.log(message.data);
-		console.log(data.message);
 		/* Format
 		<div class="message">
 			<div class="timeStamp">12:20</div>
@@ -49,9 +41,7 @@ $(function() {
 	};
 	
 	$("#submitMessage").click(function() {
-		console.log("Sending Message");
 		var message = {
-			//handle: $("#nameDisplay").text(),//temp line, keep user name on server
 			message: $("#inputMessage").val()
 		};
 		chatSocket.send(JSON.stringify(message));
