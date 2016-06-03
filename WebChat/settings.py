@@ -80,7 +80,7 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
+    },
 }
 
 
@@ -105,7 +105,10 @@ AUTH_PASSWORD_VALIDATORS = [
 
 CHANNEL_LAYERS = {
 	"default": {
-		"BACKEND": "asgiref.inmemory.ChannelLayer",
+		"BACKEND": "asgi_redis.RedisChannelLayer",
+		"CONFIG": {
+			"hosts": [("localhost", 6379)],
+		},
         "ROUTING": "WebChat.routing.channel_routing",
 	},
 }
