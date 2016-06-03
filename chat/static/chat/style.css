@@ -98,6 +98,12 @@ body {
 	border-bottom: 1px solid #000;
 }
 
+.chatTime{
+	display: inline-block;
+	font-size: 50%;
+	font-weight: bold;
+}
+
 .chatUserName{
 	display: inline-block;
 	font-size: 50%;

@@ -31,6 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+	'channels',
 	'chat.apps.ChatConfig',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -100,6 +101,14 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
+
+
+CHANNEL_LAYERS = {
+	"default": {
+		"BACKEND": "asgiref.inmemory.ChannelLayer",
+        "ROUTING": "WebChat.routing.channel_routing",
+	},
+}
 
 
 # Internationalization

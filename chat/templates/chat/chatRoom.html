@@ -6,7 +6,9 @@
 	{% load staticfiles %}
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="stylesheet" type="text/css" href="{% static 'chat/style.css' %}">
-	<!--<script src="script.js"></script>-->
+	<script src="{% static 'chat/jquery-1.12.3.js' %}"></script>
+	<script src="{% static 'chat/chatScript.js' %}"></script>
+	<script src="{% static 'chat/reconnecting-websocket.js' %}"></script>
 </head>
 <body>
 	<div id="wrapper">
@@ -31,28 +33,8 @@
 				</div>
 				
 				<div id="chatEle">
-					<div class="message">
-						<div class="chatUserName">UserName:</div>
-						<div class="chatMessage">This is a message</div>
-					</div>
-					<div class="message">
-						<div class="chatUserName">UserName:</div>
-						<div class="chatMessage">This is a message</div>
-					</div>
-					<div class="message">
-						<div class="chatUserName">UserName:</div>
-						<div class="chatMessage">This is a message</div>
-					</div>
-					<div class="message">
-						<div class="chatUserName">UserName:</div>
-						<div class="chatMessage">This is a message</div>
-					</div>
-					<div class="message">
-						<div class="chatUserName">UserName:</div>
-						<div class="chatMessage">This is a message</div>
-					</div>
-				</div>
 				
+				</div>
 				<div id="messageInputEle">
 					<input type="text" name="inputMessage" id="inputMessage" value="" placeholder="Type Here...">	
 					<input type="button" value="Send" id="submitMessage">
