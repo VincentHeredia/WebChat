@@ -25,6 +25,13 @@ def ws_message(message):
 	data = json.loads(message['text'])
 	m = room.messages.create(handle=data['user'], message=data['message'])
 	
+	#only hold 50 messages in the database
+	#note: might be a better idea to make a custom save() function for the Message model
+	if room.messages.count() > 50:
+		#remove oldest date
+		room.messages.order_by('timestamp').first().delete() #can also use [0] instead of first()
+	
+	
 	print(message['text'])
 	print("User " + data['user'])
 	print("Message " + data['message'])
