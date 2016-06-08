@@ -1,4 +1,5 @@
 import json
+import re
 
 from channels import Group
 from channels.sessions import channel_session
@@ -26,6 +27,12 @@ def ws_message(message):
 	
 	if len(msg) < 1:
 		return #do nothing, message is blank
+		
+	#regex: ^[a-zA-Z0-9]*$ 
+	#Matches with a string with no special characters
+	if not bool(re.fullmatch("[a-zA-Z0-9]*",data['user'])):
+		print("Recieved invalid username")
+		return #do nothing, username is invalid
 	
 	m = room.messages.create(handle=data['user'], message=data['message'])
 	
