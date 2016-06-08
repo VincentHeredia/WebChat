@@ -28,7 +28,7 @@ body {
 /* -------------- login styles -------------- */
 
 #login {
-	display: none;/*Hidden after logging in*/
+	display: block;/*Hidden after logging in*/
 	width: 100%;
 	height: 100%;
 	text-align: center;
@@ -43,7 +43,7 @@ body {
 .Absolute-Center {
 	  width: 100%;
 	  height: 70%;
-	  overflow: auto;
+	  overflow: none;
 	  margin: auto;
 	  position: absolute;
 	  top: 0; left: 0; bottom: 0; right: 0;
@@ -64,7 +64,7 @@ body {
 /* -------------- chat styles -------------- */
 
 #chatWindow {
-	display: block;/*Hidden until logged in*/
+	display: none;/*Hidden until logged in*/
 	width: 100%;
 	height: 100%;
 	background-color: #FFCC99;

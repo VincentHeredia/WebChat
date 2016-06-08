@@ -23,20 +23,21 @@
 				<div class="blockEle inputBlock">
 					<input type="button" value="Submit" id="submitName">
 				</div>
+				<div><span id="loginError"></span></div>
 			</div>
 		</section>
 		
 		<section id="chatWindow">
 			<div id="outerChatLayer">
 				<div id="topInfo">
-					<div>Name:<span id="nameDisplay"></span></div>
+					<div>Name: <span id="nameDisplay"></span></div>
 				</div>
 				
 				<div id="chatEle">
 				{% for message in messages %}
 					<div class="message">
 						<div class="chatTime">{{ message.formatted_timestamp }}, </div>
-						<div class="chatUserName">{{ message.handle }}: </div>
+						<div class="chatUserName">{{ message.handle }}:</div>
 						<div class="chatMessage">{{ message.message }}</div>
 					</div>
 				{% endfor %}

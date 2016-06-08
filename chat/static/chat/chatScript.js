@@ -8,12 +8,33 @@ $(function() {
 	var ws_scheme = window.location.protocol == "https:" ? "wss" : "ws";
 	var chatSocket = new ReconnectingWebSocket(ws_scheme + '://' + window.location.host + "/chatsocket/");
 	var chatMessageCount = 0;
-	var userName = "Person 1"//temp line
+	var userName;//temp line
 	var scrolledUp = false;
 	
-	chatSocket.onopen = function(){
+	
+	$("#submitName").click(function(){
+		var name = $("#inputName").val().trim();
+		var pat = new RegExp("^[a-zA-Z0-9]*$");
+		
+		if (name.length > 12){
+			$("#loginError").text("Name is too long (max 12 char)");
+			return;
+		}
+		else if(name.length < 4){
+			$("#loginError").text("Name is too short (min 4 char)");
+			return;
+		}
+		else if(!pat.test(name)){
+			$("#loginError").text("Name cannot contain special characters");
+			return;
+		}
+		userName = name;
+		$("#login").css("display", "none");
+		$("#chatWindow").css("display", "block");
 		$("#chatEle").scrollTop($("#chatEle")[0].scrollHeight);//auto scroll
-	}
+		$("#nameDisplay").text(userName)
+	});
+	
 	
 	chatSocket.onmessage = function(message){
 		var data = JSON.parse(message.data);//get data
@@ -47,7 +68,7 @@ $(function() {
 	});
 	
 	//Enter button
-	$("#inputMessage").keydown(function (e) {
+	$("#inputMessage").keydown(function(e) {
 		if (e.keyCode == 13) {
 			sendSocketMessage();
 		}
@@ -64,10 +85,7 @@ $(function() {
 		}
 	});
 	
-	
-	
-	
-	
+	//send a message
 	function sendSocketMessage(){
 		var message = {
 			user: userName,//temp line, store on server
@@ -78,18 +96,19 @@ $(function() {
 		$("#inputMessage").focus();
 	}
 	
+	//builds a message element and inserts it into the chat window
 	function buildNewElement(data) {
 		var chatWindow = $("#chatEle");
 		
 		//build new element
 		var newElement = $('<div class="message"></div>');
-		newElement.append($('<div class="chatTime"></div>').text(data.timestamp + ", "));
-		newElement.append($('<div class="chatUserName"></div>').text(" " + data.handle + ": "));
-		newElement.append($('<div class="chatMessage"></div>').text(data.message));
+		newElement.append($('<div class="chatTime"></div>').html(data.timestamp + ",&nbsp;"));
+		newElement.append($('<div class="chatUserName"></div>').html(data.handle + ":&nbsp;"));
+		newElement.append($('<div class="chatMessage"></div>').html(data.message));
 		
-		//This needs to be changed to
+		chatWindow.append(newElement);
+		
 		if (!scrolledUp){
-			chatWindow.append(newElement);
 			$("#chatEle").scrollTop($("#chatEle")[0].scrollHeight);//auto scroll
 		}
 		
