@@ -9,11 +9,7 @@ $(function() {
 	var chatSocket = new ReconnectingWebSocket(ws_scheme + '://' + window.location.host + "/chatsocket/");
 	var chatMessageCount = 0;
 	var userName = "Person 1"//temp line
-	
-	chatSocket.onopen = function(message){
-		
-	}
-	
+	var scrolledUp = false;
 	
 	chatSocket.onmessage = function(message){
 		var data = JSON.parse(message.data);//get data
@@ -41,7 +37,19 @@ $(function() {
 		chatMessageCount++;
 	};
 	
+	//Submit button
 	$("#submitMessage").click(function() {
+		sendSocketMessage();
+	});
+	
+	//Enter button
+	$("#inputMessage").keydown(function (e) {
+		if (e.keyCode == 13) {
+			sendSocketMessage();
+		}
+	});
+	
+	function sendSocketMessage(){
 		var message = {
 			user: userName,//temp line, store on server
 			message: $("#inputMessage").val()
@@ -49,8 +57,7 @@ $(function() {
 		chatSocket.send(JSON.stringify(message));
 		$("#inputMessage").val("");//clear value
 		$("#inputMessage").focus();
-	});
-	
+	}
 	
 	function buildNewElement(data) {
 		var chatWindow = $("#chatEle");
@@ -61,8 +68,11 @@ $(function() {
 		newElement.append($('<div class="chatUserName"></div>').text(" " + data.handle + ": "));
 		newElement.append($('<div class="chatMessage"></div>').text(data.message));
 		
-		chatWindow.append(newElement);
-		$("#chatEle").scrollTop($("#chatEle")[0].scrollHeight);//auto scroll
+		//This needs to be changed to
+		if (!scrolledUp){
+			chatWindow.append(newElement);
+			$("#chatEle").scrollTop($("#chatEle")[0].scrollHeight);//auto scroll
+		}
 		
 		if(chatMessageCount > 50){//remove old messages
 			$("#chatEle .message").first().remove();

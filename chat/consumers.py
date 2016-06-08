@@ -21,6 +21,12 @@ def ws_message(message):
 	room = Room.objects.get(label='room1') #temp line
 	
 	data = json.loads(message['text'])
+	
+	msg = data['message'].strip()
+	
+	if len(msg) < 1:
+		return #do nothing, message is blank
+	
 	m = room.messages.create(handle=data['user'], message=data['message'])
 	
 	#only hold 50 messages in the database
