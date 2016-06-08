@@ -35,12 +35,6 @@ def ws_message(message):
 		#remove oldest date
 		room.messages.order_by('timestamp').first().delete() #can also use [0] instead of first()
 	
-	
-	print(message['text'])
-	print("User " + data['user'])
-	print("Message " + data['message'])
-	print(m.as_dict())
-	
 	Group("chat-%s" % message.channel_session['room']).send({
 		"text": json.dumps(m.as_dict()),
 	})

@@ -11,6 +11,10 @@ $(function() {
 	var userName = "Person 1"//temp line
 	var scrolledUp = false;
 	
+	chatSocket.onopen = function(){
+		$("#chatEle").scrollTop($("#chatEle")[0].scrollHeight);//auto scroll
+	}
+	
 	chatSocket.onmessage = function(message){
 		var data = JSON.parse(message.data);//get data
 		
@@ -48,6 +52,21 @@ $(function() {
 			sendSocketMessage();
 		}
 	});
+	
+	//if user scrolls to the bottom
+	$("#chatEle").scroll(function() {
+		offset = $("#chatEle")[0].scrollHeight - $("#chatEle").height();
+		if($("#chatEle").scrollTop() == offset) {
+			scrolledUp = false;
+		}
+		else {
+			scrolledUp = true;
+		}
+	});
+	
+	
+	
+	
 	
 	function sendSocketMessage(){
 		var message = {
