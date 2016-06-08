@@ -33,7 +33,13 @@
 				</div>
 				
 				<div id="chatEle">
-				
+				{% for message in messages %}
+					<div class="message">
+						<div class="chatTime">{{ message.formatted_timestamp }}, </div>
+						<div class="chatUserName">{{ message.handle }}: </div>
+						<div class="chatMessage">{{ message.message }}</div>
+					</div>
+				{% endfor %}
 				</div>
 				<div id="messageInputEle">
 					<input type="text" name="inputMessage" id="inputMessage" value="" placeholder="Type Here...">	

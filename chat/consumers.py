@@ -9,19 +9,17 @@ from chat.models import Room
 def ws_connect(message):
 	# get room name
 	room = message.content['path'].strip("/")
-	
 	# save room
 	message.channel_session['room'] = room
 	
 	# add user to room
 	Group("chat-%s" % room).add(message.reply_channel)
-	
 
 #receive
 @channel_session
 def ws_message(message):
-	
 	room = Room.objects.get(label='room1') #temp line
+	
 	data = json.loads(message['text'])
 	m = room.messages.create(handle=data['user'], message=data['message'])
 	

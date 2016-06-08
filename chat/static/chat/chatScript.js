@@ -17,7 +17,6 @@ $(function() {
 	
 	chatSocket.onmessage = function(message){
 		var data = JSON.parse(message.data);//get data
-		var chatWindow = $("#chatEle");
 		
 		/* Format
 		<div class="message">
@@ -52,19 +51,21 @@ $(function() {
 		$("#inputMessage").focus();
 	});
 	
-});
-
-function buildNewElement(data) {
-	//build new element
-	var newElement = $('<div class="message"></div>');
-	newElement.append($('<div class="chatTime"></div>').text(data.timestamp + ", "));
-	newElement.append($('<div class="chatUserName"></div>').text(" " + data.handle + ": "));
-	newElement.append($('<div class="chatMessage"></div>').text(data.message));
 	
-	chatWindow.append(newElement);
-	$("#chatEle").scrollTop($("#chatEle")[0].scrollHeight);//auto scroll
-	
-	if(chatMessageCount > 50){//remove old messages
-		$("#chatEle .message").first().remove();
+	function buildNewElement(data) {
+		var chatWindow = $("#chatEle");
+		
+		//build new element
+		var newElement = $('<div class="message"></div>');
+		newElement.append($('<div class="chatTime"></div>').text(data.timestamp + ", "));
+		newElement.append($('<div class="chatUserName"></div>').text(" " + data.handle + ": "));
+		newElement.append($('<div class="chatMessage"></div>').text(data.message));
+		
+		chatWindow.append(newElement);
+		$("#chatEle").scrollTop($("#chatEle")[0].scrollHeight);//auto scroll
+		
+		if(chatMessageCount > 50){//remove old messages
+			$("#chatEle .message").first().remove();
+		}
 	}
-}
+});
