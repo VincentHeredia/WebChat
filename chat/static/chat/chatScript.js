@@ -6,7 +6,7 @@
 
 $(function() {
 	var ws_scheme = window.location.protocol == "https:" ? "wss" : "ws";
-	var chatSocket = new ReconnectingWebSocket(ws_scheme + '://' + window.location.host + "/chatsocket/");
+	var chatSocket;// = new ReconnectingWebSocket(ws_scheme + '://' + window.location.host + "/chatsocket/");
 	var chatMessageCount = 0;
 	var userName;//temp line
 	var scrolledUp = false;
@@ -29,6 +29,9 @@ $(function() {
 			return;
 		}
 		userName = name;
+		
+		chatSocket = new ReconnectingWebSocket(ws_scheme + '://' + window.location.host + "/chatsocket/");
+		
 		$("#login").css("display", "none");
 		$("#chatWindow").css("display", "block");
 		$("#chatEle").scrollTop($("#chatEle")[0].scrollHeight);//auto scroll

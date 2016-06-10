@@ -2,12 +2,14 @@ import json
 import re
 
 from channels import Group
-from channels.sessions import channel_session
+from channels.sessions import channel_session, enforce_ordering
 from chat.models import Room
 
 # connect
+@enforce_ordering(slight=True)
 @channel_session
 def ws_connect(message):
+	print(message)
 	# get room name
 	room = message.content['path'].strip("/")
 	# save room
@@ -17,6 +19,7 @@ def ws_connect(message):
 	Group("chat-%s" % room).add(message.reply_channel)
 
 #receive
+@enforce_ordering(slight=True)
 @channel_session
 def ws_message(message):
 	room = Room.objects.get(label='room1') #temp line
@@ -48,6 +51,7 @@ def ws_message(message):
 
 
 #disconnect
+@enforce_ordering(slight=True)
 @channel_session
 def ws_disconnect(message):
 	Group("chat-%s" % message.channel_session['room']).discard(message.reply_channel)
