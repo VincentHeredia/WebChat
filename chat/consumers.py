@@ -9,7 +9,6 @@ from chat.models import Room
 @enforce_ordering(slight=True)
 @channel_session
 def ws_connect(message):
-	print(message)
 	# get room name
 	room = message.content['path'].strip("/")
 	# save room
