@@ -15,8 +15,21 @@ Including another URLconf
 """
 from django.conf.urls import include, url
 from django.contrib import admin
+from . import views
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
 	url(r'^chat/', include('chat.urls')),
+	
+	#login
+	#Tutorial: https://www.youtube.com/watch?v=CFypO_LNmcc
+	#          Note: Tutorial is out of date
+	url(r'^login/$', views.login),
+	url(r'^auth/$', views.auth_view),
+	url(r'^logout/$', views.logout),
+	url(r'^loggedin/$', views.loggedin),
+	url(r'^invalid/$', views.invalid_login),
+	
+	url(r'^register/$', views.register),
+	url(r'^register_success/$', views.register_success),
 ]

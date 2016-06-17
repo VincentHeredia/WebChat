@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>WebChat</title>
+	{% load staticfiles %}
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
+	<script src="{% static 'jquery-1.12.3.js' %}"></script>
+	<script src="{% static 'loginScript.js' %}"></script>
+</head>
+<body>
+	<div id="wrapper">
+		<section id="login" class="Center-Container">
+			<div class="Absolute-Center">
+				<form action="/auth/" method="post">{% csrf_token %}
+					<h1>Login</h1>
+					<div><span id="loginError"></span></div>
+					<div class="blockEle inputBlock">
+						<label for="name">Name:</label>
+						<input type="text" name="name" id="inputName" value="" placeholder="">
+					</div>
+					<div class="blockEle inputBlock">
+						<label for="pass">Password:</label>
+						<input type="password" name="pass" id="inputPassword" value="" placeholder="">
+					</div>
+					<div class="blockEle inputBlock">
+						<input type="button" value="Submit" id="submitName">
+					</div>
+					<div><a href="/register">(Create an account)</a></div>
+				</form>
+				{% if hasErrors %}
+					<p class="error">There were errors logging in</p>
+				{% endif%}
+			</div>
+		</section>
+	</div>
+</body>
+</html>

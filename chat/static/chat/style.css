@@ -2,7 +2,7 @@
 
 /* -------------- global styles -------------- */
 body {
-	font-family: 'Georgia', serif;
+	font-family:  Arial, Helvetica, sans-serif;
 	font-size: 150%;
 	margin: 0px;
 	
@@ -13,58 +13,12 @@ body {
 	margin: 0px auto;
 	height: 100vh;
 }
-
-/*
-@media (max-width: 768px){
-	#wrapper{
-		width: 100%;
-	}
-}
-*/
-
 /* -------------- end of global styles -------------- */
-
-
-/* -------------- login styles -------------- */
-
-#login {
-	display: block;/*Hidden after logging in*/
-	width: 100%;
-	height: 100%;
-	text-align: center;
-	background-color: #FFCC99;
-}
-
-/* Centers container in the middle of screen */
-/* Credit: https://www.smashingmagazine.com/2013/08/absolute-horizontal-vertical-centering-css/ */
-.Center-Container {
-	position: relative;
-}
-.Absolute-Center {
-	  width: 100%;
-	  height: 70%;
-	  overflow: none;
-	  margin: auto;
-	  position: absolute;
-	  top: 0; left: 0; bottom: 0; right: 0;
-}
-
-
-#login p, #login h1 {
-	margin: 10%;
-}	
-
-.inputBlock{
-	margin: 20px 0px;
-}
-
-/* -------------- end of login styles -------------- */
 
 
 /* -------------- chat styles -------------- */
 
 #chatWindow {
-	display: none;/*Hidden until logged in*/
 	width: 100%;
 	height: 100%;
 	background-color: #FFCC99;
@@ -82,10 +36,14 @@ body {
 	padding: 10px 0px;
 	font-size: 70%;
 }
+#topInfo a{
+	text-align: right;
+}
 
 #chatEle{
 	background-color: #fff;
-	overflow: auto;
+	overflow-y: auto;
+	overflow-x: hidden;
 	height: 70vh;
 	
 	-moz-box-shadow: inset 0 0 1px 1px #888;
@@ -96,6 +54,7 @@ body {
 .message {
 	padding: 0px 5px; 
 	border-bottom: 1px solid #000;
+	padding-bottom: 5px;
 }
 
 .chatTime{
@@ -112,8 +71,9 @@ body {
 
 .chatMessage{
 	display: inline-block;
-	padding: 5px 0px 10px 5px;
+	padding: 0px;
 	font-size: 50%;
+	word-wrap: break-word;
 }
 
 #messageInputEle {
@@ -136,6 +96,23 @@ body {
 
 /* -------------- miscellaneous styles -------------- */
 
+/* Centers container in the middle of screen */
+/* Credit: https://www.smashingmagazine.com/2013/08/absolute-horizontal-vertical-centering-css/ */
 
+
+.Center-Container {
+	position: relative;
+}
+.Absolute-Center {
+	  width: 100%;
+	  height: 70%;
+	  overflow: none;
+	  margin: auto;
+	  position: absolute;
+	  top: 0; left: 0; bottom: 0; right: 0;
+}
+.inputBlock{
+	margin: 20px 0px;
+}
 
 /* -------------- end of miscellaneous styles -------------- */

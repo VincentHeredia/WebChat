@@ -1,0 +1,94 @@
+@charset "utf-8";
+
+/* -------------- global styles -------------- */
+body {
+	font-family: 'Georgia', serif;
+	font-size: 150%;
+	margin: 0px;
+	
+	background-color: #f8f8f8;
+}
+
+#wrapper {
+	margin: 0px auto;
+	height: 100vh;
+}
+/* -------------- end of global styles -------------- */
+
+
+/* -------------- login styles -------------- */
+
+#login {
+	display: block;/*Hidden after logging in*/
+	width: 100%;
+	height: 100%;
+	text-align: center;
+	background-color: #FFCC99;
+}
+
+h1 {
+	margin: 0px;
+}
+
+.error {
+	color: red;
+	font-size: 50%;
+}
+
+p {
+	margin: 10px;
+}
+
+form {
+	text-align: center;
+}
+
+label, input {
+	display: block;
+	margin: 2px auto;
+}
+
+span {
+	display: block;
+	font-size: 70%;
+	margin: 10px auto;
+}
+
+a{
+	font-size: 50%;
+	text-decoration: none;
+	color: black;
+}
+a:hover {
+	color: grey;
+}
+a:visited {
+    color: black;
+}
+a:active {
+    color: blue;
+}
+
+/* -------------- end of login styles -------------- */
+
+
+/* -------------- miscellaneous styles -------------- */
+
+/* Centers container in the middle of screen */
+/* Credit: https://www.smashingmagazine.com/2013/08/absolute-horizontal-vertical-centering-css/ */
+.Center-Container {
+	position: relative;
+}
+.Absolute-Center {
+	  width: 100%;
+	  height: 70%;
+	  overflow: none;
+	  margin: auto;
+	  position: absolute;
+	  top: 0; left: 0; bottom: 0; right: 0;
+}
+.inputBlock{
+	margin: 20px 0px;
+}
+
+/* -------------- end of miscellaneous styles -------------- */

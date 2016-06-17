@@ -5,60 +5,13 @@
 //  reconnect solution used: https://github.com/joewalnes/reconnecting-websocket
 
 $(function() {
-	var ws_scheme = window.location.protocol == "https:" ? "wss" : "ws";
-	var chatSocket = new ReconnectingWebSocket(ws_scheme + '://' + window.location.host + "/chatsocket/");
-	var chatMessageCount = 0;
-	var userName;//temp line
+	var chatMessageCount = 0;//need to get number of messages
 	var scrolledUp = false;
 	
-	
-	$("#submitName").click(function(){
-		var name = $("#inputName").val().trim();
-		var pat = new RegExp("^[a-zA-Z0-9]*$");
-		
-		if (name.length > 12){
-			$("#loginError").text("Name is too long (max 12 char)");
-			return;
-		}
-		else if(name.length < 4){
-			$("#loginError").text("Name is too short (min 4 char)");
-			return;
-		}
-		else if(!pat.test(name)){
-			$("#loginError").text("Name cannot contain special characters");
-			return;
-		}
-		userName = name;
-		
-		$("#login").css("display", "none");
-		$("#chatWindow").css("display", "block");
-		$("#chatEle").scrollTop($("#chatEle")[0].scrollHeight);//auto scroll
-		$("#nameDisplay").text(userName)
-	});
-	
+	$("#chatEle").scrollTop($("#chatEle")[0].scrollHeight);//auto scroll
 	
 	chatSocket.onmessage = function(message){
 		var data = JSON.parse(message.data);//get data
-		
-		/* Format
-		<div class="message">
-			<div class="timeStamp">12:20</div>
-			<div class="chatUserName">UserName:</div>
-			<div class="chatMessage">This is a message</div>
-		</div>
-		*/
-		
-		/* Fix it so it outputs h/m/s when on the same day and m/d/t when on another day
-		var timeOutput;
-		if(data.timestamp ){
-			
-			timeOutput = ;
-		}
-		else {
-			
-		}
-		*/
-		
 		buildNewElement(data);
 		chatMessageCount++;
 	};
@@ -89,7 +42,6 @@ $(function() {
 	//send a message
 	function sendSocketMessage(){
 		var message = {
-			user: userName,//temp line, store on server
 			message: $("#inputMessage").val()
 		};
 		chatSocket.send(JSON.stringify(message));

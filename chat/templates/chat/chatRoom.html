@@ -7,30 +7,20 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="stylesheet" type="text/css" href="{% static 'chat/style.css' %}">
 	<script src="{% static 'chat/jquery-1.12.3.js' %}"></script>
-	<script src="{% static 'chat/chatScript.js' %}"></script>
 	<script src="{% static 'chat/reconnecting-websocket.js' %}"></script>
+	<script>
+		var ws_scheme = window.location.protocol == "https:" ? "wss" : "ws";
+		var chatSocket = new ReconnectingWebSocket(ws_scheme + '://' + window.location.host + "/chatsocket/?session_key={{ request.session.session_key }}");
+	</script>
+	<script src="{% static 'chat/chatScript.js' %}"></script>
+	
 </head>
 <body>
 	<div id="wrapper">
-		<section id="login" class="Center-Container">
-			<div class="Absolute-Center">
-				<h1>Login</h1>
-				<p>Please enter your user name (not your real name).</p>
-				<div class="blockEle inputBlock">
-					<label for="name">Name:</label>
-					<input type="text" name="name" id="inputName" value="" placeholder="Type Here...">
-				</div>
-				<div class="blockEle inputBlock">
-					<input type="button" value="Submit" id="submitName">
-				</div>
-				<div><span id="loginError"></span></div>
-			</div>
-		</section>
-		
 		<section id="chatWindow">
 			<div id="outerChatLayer">
 				<div id="topInfo">
-					<div>Name: <span id="nameDisplay"></span></div>
+					<div>Name: {{userName}} <a id="nameDisplay" href="/logout">Logout</a></div>
 				</div>
 				
 				<div id="chatEle">
