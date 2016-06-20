@@ -38,6 +38,9 @@ def logout(request):
 
 #Check information
 def register(request):
+	c = {}
+	c.update(csrf(request))
+
 	if request.method == 'POST':
 		form = UserCreationForm(request.POST)
 		if form.is_valid():
@@ -46,14 +49,11 @@ def register(request):
 		else:
 			c = {
 				'hasErrors': True,
+				'form': form
 			}
-			c.update(csrf(request))
-			c['form'] = UserCreationForm()
-			return render(request ,'register.html',c)
-		
-	c = {}
-	c.update(csrf(request))
-	c['form'] = UserCreationForm()
+	else:
+		c['form'] = UserCreationForm()
+	
 	return render(request ,'register.html',c)
 	
 	
@@ -62,7 +62,7 @@ def register_success(request):
 	
 	
 	
-"""
+""" regex checking example
 #regex: ^[a-zA-Z0-9]*$ 
 #Matches with a string with no special characters
 if not bool(re.fullmatch("[a-zA-Z0-9]*",data['user'])):
@@ -98,25 +98,9 @@ passConfirm = request.POST.get('inputConfirmPassword', '')
 
 
 if not bool(re.fullmatch("[a-zA-Z0-9]*",username)) and len(username) > 15 or len(username) < 4:
-	print("Recieved invalid username")
-	print(username)
-	print("1")
-	print(len(username) > 15)
-	print("2")
-	print(len(username) < 4)
-	print("3")
-	print(not bool(re.fullmatch("[a-zA-Z0-9]*",username)))
 	success = False
 
 if password == passConfirm and len(password) > 50 or len(password) < 5:
-	print("Recieved invalid passwords")
-	print(password)
-	print("1")
-	print(len(password) > 50)
-	print("2")
-	print(len(password) < 5)
-	print("3")
-	print(password == passConfirm)
 	success = False
 
 if success is not None and form.is_valid():

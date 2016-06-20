@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.template import loader
 from chat.models import Room
+from django.http import HttpResponseRedirect
 
 # Create your views here.
 

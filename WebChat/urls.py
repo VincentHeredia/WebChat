@@ -24,6 +24,7 @@ urlpatterns = [
 	#login
 	#Tutorial: https://www.youtube.com/watch?v=CFypO_LNmcc
 	#          Note: Tutorial is out of date
+	url(r'^$', views.login), #default
 	url(r'^login/$', views.login),
 	url(r'^auth/$', views.auth_view),
 	url(r'^logout/$', views.logout),

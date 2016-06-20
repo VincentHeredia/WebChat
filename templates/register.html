@@ -12,11 +12,13 @@
 		<section id="login">
 			<h1>Create a new user</h1>
 			<form action="/register/" method="post">{% csrf_token %}
-				{{form}}
+				{{ form }}
 				<input type="submit" value="Register">
 			</form>
 			{% if hasErrors %}
-				<p class="error">There were errors creating the account</p>
+			<div class="errorlist">
+				<p>There were errors creating the account</p>
+			</div>
 			{% endif%}
 		</section>
 	</div>

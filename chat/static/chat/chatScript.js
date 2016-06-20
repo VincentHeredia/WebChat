@@ -30,8 +30,8 @@ $(function() {
 	
 	//if user scrolls to the bottom
 	$("#chatEle").scroll(function() {
-		offset = $("#chatEle")[0].scrollHeight - $("#chatEle").height();
-		if($("#chatEle").scrollTop() == offset) {
+		offset = $("#chatEle")[0].scrollHeight - $("#chatEle").height() - 70;
+		if($("#chatEle").scrollTop() >= offset) {
 			scrolledUp = false;
 		}
 		else {
@@ -55,8 +55,8 @@ $(function() {
 		
 		//build new element
 		var newElement = $('<div class="message"></div>');
-		newElement.append($('<div class="chatTime"></div>').html(data.timestamp + ",&nbsp;"));
-		newElement.append($('<div class="chatUserName"></div>').html(data.handle + ":&nbsp;"));
+		newElement.append($('<div class="chatTime"></div>').html(data.timestamp + ",&nbsp;&nbsp;"));
+		newElement.append($('<div class="chatUserName"></div>').html(data.handle + ":&nbsp;&nbsp;"));
 		newElement.append($('<div class="chatMessage"></div>').html(data.message));
 		
 		chatWindow.append(newElement);

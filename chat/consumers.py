@@ -10,9 +10,10 @@ from channels.auth import http_session_user, channel_session_user, channel_sessi
 # connect
 @enforce_ordering(slight=True)
 @channel_session
+@channel_session_user_from_http
 def ws_connect(message):
 	# get room name
-	room = message.content['path'].strip("/")
+	room = 'room1' #temp line, change to get a specific room in the database
 	# save room
 	message.channel_session['room'] = room
 	# add user to room
@@ -23,21 +24,16 @@ def ws_connect(message):
 @channel_session
 @channel_session_user
 def ws_message(message):
-	room = Room.objects.get(label='room1') #temp line
-	data = json.loads(message['text'])
-	msg = data['message'].strip()
+	room = Room.objects.get(label=message.channel_session['room']) #temp line
+	msg = json.loads(message['text'])['message'].strip()
 	
 	if len(msg) < 1:
 		return #do nothing, message is blank
 	
-	print(message.user.is_authenticated())
 	if message.user.is_authenticated():
-		username = message.user.username
+		m = room.messages.create(handle=message.user.username, message=msg)
 	else:
 		return
-	
-	
-	m = room.messages.create(handle=username, message=data['message'])
 	
 	#only hold 50 messages in the database
 	#note: might be a better idea to make a custom save() function for the Message model
@@ -57,7 +53,7 @@ def ws_disconnect(message):
 	Group("chat-%s" % message.channel_session['room']).discard(message.reply_channel)
 
 
-""" Old functions
+""" Old functions: works as direct chat with no database
 def ws_message(message):
 	data = json.loads(message['text'])
 	

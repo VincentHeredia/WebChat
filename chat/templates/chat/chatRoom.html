@@ -20,13 +20,14 @@
 		<section id="chatWindow">
 			<div id="outerChatLayer">
 				<div id="topInfo">
-					<div>Name: {{userName}} <a id="nameDisplay" href="/logout">Logout</a></div>
+					<div id="nameDisplay">Name: {{userName}}</div>
+					<div id="logout"><a id="nameDisplay" href="/logout">Logout</a></div>
 				</div>
 				
 				<div id="chatEle">
 				{% for message in messages %}
 					<div class="message">
-						<div class="chatTime">{{ message.formatted_timestamp }}, </div>
+						<div class="chatTime">{{ message.formatted_timestamp }},</div>
 						<div class="chatUserName">{{ message.handle }}:</div>
 						<div class="chatMessage">{{ message.message }}</div>
 					</div>
