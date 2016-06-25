@@ -26,6 +26,23 @@ def ws_connect(message):
 def ws_message(message):
 	room = Room.objects.get(label=message.channel_session['room']) #temp line
 	msg = json.loads(message['text'])['message'].strip()
+	funct = json.loads(message['text'])['funct'].strip()
+	deleteId = json.loads(message['text'])['id'].strip()
+	
+	if funct and message.user.is_superuser: #if this is not a chat message and user is an admin
+		if funct == "delete":
+			room.messages.get(id=deleteId).delete()
+			deleteMsg = {
+				"type": "deleteMsg",
+				"id": deleteId,
+			}
+			Group("chat-%s" % message.channel_session['room']).send({
+				"text": json.dumps(deleteMsg), # convert to string
+			})
+			return # no message to process, return
+		else:
+			return # do nothing, user is not an admin and is trying to delete a message
+	
 	
 	if len(msg) < 1:
 		return #do nothing, message is blank
@@ -41,8 +58,15 @@ def ws_message(message):
 		#remove oldest date
 		room.messages.order_by('timestamp').first().delete() #can also use [0] instead of first()
 	
+	userPriv = "normal"
+	if message.user.is_superuser: # if the user is an admin, send "admin" value for extra options
+		userPriv = "admin"
+		
+	newMsg = {"type": "newMsg"}
+	newMsg.update(m.as_dict()) # get message as a dict
+	newMsg.update({"user": userPriv}) # add "user" data
 	Group("chat-%s" % message.channel_session['room']).send({
-		"text": json.dumps(m.as_dict()),
+		"text": json.dumps(newMsg), # convert to string
 	})
 
 

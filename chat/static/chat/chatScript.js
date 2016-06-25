@@ -11,9 +11,18 @@ $(function() {
 	$("#chatEle").scrollTop($("#chatEle")[0].scrollHeight);//auto scroll
 	
 	chatSocket.onmessage = function(message){
-		var data = JSON.parse(message.data);//get data
-		buildNewElement(data);
-		chatMessageCount++;
+		var data = JSON.parse(message.data);
+		if(data.type == "newMsg"){
+			buildNewElement(data);
+			chatMessageCount++;
+		}
+		else if (data.type == "deleteMsg"){
+			$("#message" + data.id).remove();
+			chatMessageCount--;
+		}
+		else {
+			console.log("Recieved untyped message")
+		}
 	};
 	
 	//Submit button
@@ -39,10 +48,21 @@ $(function() {
 		}
 	});
 	
+	$(".deleteInput").click(function(){
+		var message = {
+			message: "",
+			funct: "delete",
+			id: this.id.substring(6,this.id.length)
+		};
+		chatSocket.send(JSON.stringify(message));
+	});
+	
 	//send a message
 	function sendSocketMessage(){
 		var message = {
-			message: $("#inputMessage").val()
+			message: $("#inputMessage").val(),
+			funct: "",
+			id: ""
 		};
 		chatSocket.send(JSON.stringify(message));
 		$("#inputMessage").val("");//clear value
@@ -54,10 +74,16 @@ $(function() {
 		var chatWindow = $("#chatEle");
 		
 		//build new element
-		var newElement = $('<div class="message"></div>');
+		var newElement = $('<div class="message" id="message' + data.id + 'Chat"></div>');
 		newElement.append($('<div class="chatTime"></div>').html(data.timestamp + ",&nbsp;&nbsp;"));
 		newElement.append($('<div class="chatUserName"></div>').html(data.handle + ":&nbsp;&nbsp;"));
 		newElement.append($('<div class="chatMessage"></div>').html(data.message));
+		
+		if(data.user == "admin"){
+			var newDeleteOption = $('<div class="deleteOption"></div>');
+			newDeleteOption.append($('<a class="deleteInput" id="delete' + data.id + '" href="#">Delete</a>'));
+			newElement.append(newDeleteOption);
+		}
 		
 		chatWindow.append(newElement);
 		

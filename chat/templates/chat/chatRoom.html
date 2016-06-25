@@ -26,10 +26,15 @@
 				
 				<div id="chatEle">
 				{% for message in messages %}
-					<div class="message">
+					<div class="message" id="message{{ message.id }}">
 						<div class="chatTime">{{ message.formatted_timestamp }},</div>
 						<div class="chatUserName">{{ message.handle }}:</div>
 						<div class="chatMessage">{{ message.message }}</div>
+						{% if user.is_superuser %}
+							<div class="deleteOption">
+								<a class="deleteInput" id="delete{{ message.id }}" href="#">Delete</a>
+							</div>
+						{% endif %}
 					</div>
 				{% endfor %}
 				</div>

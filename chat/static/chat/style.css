@@ -66,6 +66,13 @@ body {
 	padding-bottom: 5px;
 }
 
+.chatId {
+	display: none;
+}
+.deleteOption {
+	font-size: 50%;
+}
+
 .chatTime{
 	display: inline-block;
 	font-size: 50%;

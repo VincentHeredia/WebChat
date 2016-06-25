@@ -36,7 +36,7 @@ class Message(models.Model):
 		return self.timestamp.strftime('%m-%d-%y %I:%M:%S')
 	
 	def as_dict(self):
-		return {'handle': self.handle, 'message': self.message, 'timestamp': self.formatted_timestamp}
+		return {'id': self.id, 'handle': self.handle, 'message': self.message, 'timestamp': self.formatted_timestamp}
 		
 		
 		
