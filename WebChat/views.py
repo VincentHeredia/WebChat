@@ -8,6 +8,9 @@ from django.contrib.auth.forms import UserCreationForm
 
 
 def login(request):
+	if request.user.is_authenticated():
+		return HttpResponseRedirect('/chat')
+	
 	c = {}
 	c.update(csrf(request))
 	return render(request, 'login.html', c)
@@ -38,6 +41,9 @@ def logout(request):
 
 #Check information
 def register(request):
+	if request.user.is_authenticated():
+		return HttpResponseRedirect('/chat')
+
 	c = {}
 	c.update(csrf(request))
 
