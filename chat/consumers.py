@@ -13,24 +13,31 @@ from channels.auth import http_session_user, channel_session_user, channel_sessi
 @channel_session_user_from_http
 def ws_connect(message):
 	# get room name
-	room = 'room1' #temp line, change to get a specific room in the database
+	requestedRoom = message['path'].strip('/').split('/')
+	
+	# check if user can join the room # this should never be reached
+	room = Room.objects.get(id=requestedRoom[1]) # temp line, get room from input
+	userInRoom = room.whiteListUsers.filter(handle=message.user.username)
+	if room.type == 'private' and userInRoom.count() == 0:
+		return HttpResponseRedirect('/chat/invaliduser') #user is not apart of the room
+	
 	# save room
-	message.channel_session['room'] = room
+	message.channel_session['room'] = requestedRoom[1]
 	# add user to room
-	Group("chat-%s" % room).add(message.reply_channel)
+	Group("chat-%s" % message.channel_session['room']).add(message.reply_channel)
 
 #receive
 @enforce_ordering(slight=True)
 @channel_session
 @channel_session_user
 def ws_message(message):
-	room = Room.objects.get(label=message.channel_session['room']) #temp line
+	room = Room.objects.get(id=message.channel_session['room']) #temp line
 	msg = json.loads(message['text'])['message'].strip()
 	funct = json.loads(message['text'])['funct'].strip()
-	deleteId = json.loads(message['text'])['id'].strip()
 	
 	if funct and message.user.is_superuser: #if this is not a chat message and user is an admin
 		if funct == "delete":
+			deleteId = json.loads(message['text'])['id'].strip()
 			room.messages.get(id=deleteId).delete()
 			deleteMsg = {
 				"type": "deleteMsg",
@@ -40,8 +47,8 @@ def ws_message(message):
 				"text": json.dumps(deleteMsg), # convert to string
 			})
 			return # no message to process, return
-		else:
-			return # do nothing, user is not an admin and is trying to delete a message
+	else:
+		return # do nothing, user is not an admin
 	
 	
 	if len(msg) < 1:

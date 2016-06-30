@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>WebChat</title>
+	{% load staticfiles %}
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" type="text/css" href="{% static 'chat/createStyle.css' %}">
+	<script src="{% static 'chat/jquery-1.12.3.js' %}"></script>
+	<script src="{% static 'chat/createRoom.js' %}"></script>
+</head>
+<body>
+	<div id="wrapper">
+		<section id="roomsCreationWindow">
+			<div id="topInfo">
+				<div id="nameDisplay">Name: {{userName}}</div>
+				<div id="logout"><a href="/logout">Logout</a></div>
+				<div><a href="/chat/loggedin/">Cancel</a></div>
+			</div>
+			<form action="/chat/createroom/" method="post">{% csrf_token %}
+				{{ form }}
+				<div class="blockEle inputBlock">
+					<input type="button" value="Submit" id="submitCreate">
+				</div>
+			</form>
+			{% if hasErrors %}
+				<p class="error">There were errors creating the room</p>
+				{% if typeError %}
+					<p class="error">You must select a type</p>
+				{% endif%}
+				{% if uniqueError %}
+					<p class="error">That room name is already taken</p>
+				{% endif%}
+				{% if fieldError %}
+					<p class="error">You must fill in a name for the room</p>
+				{% endif%}
+			{% endif%}
+		</section>
+	</div>
+</body>
+</html>

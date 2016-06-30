@@ -5,12 +5,12 @@
 	<title>WebChat</title>
 	{% load staticfiles %}
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link rel="stylesheet" type="text/css" href="{% static 'chat/style.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'chat/chatStyle.css' %}">
 	<script src="{% static 'chat/jquery-1.12.3.js' %}"></script>
 	<script src="{% static 'chat/reconnecting-websocket.js' %}"></script>
 	<script>
 		var ws_scheme = window.location.protocol == "https:" ? "wss" : "ws";
-		var chatSocket = new ReconnectingWebSocket(ws_scheme + '://' + window.location.host + "/chatsocket/?session_key={{ request.session.session_key }}");
+		var chatSocket = new ReconnectingWebSocket(ws_scheme + '://' + window.location.host + "/chatsocket/{{ roomId }}/?session_key={{ request.session.session_key }}");
 	</script>
 	<script src="{% static 'chat/chatScript.js' %}"></script>
 	

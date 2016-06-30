@@ -16,8 +16,9 @@ http://www.programiz.com/python-programming/property
 """
 
 class Room(models.Model):
-	name = models.TextField()
-	label = models.SlugField(unique=True)
+	name = models.TextField(unique=True)
+	label = models.SlugField()
+	type = models.TextField(default="private") # private or public
 	
 	def __str__(self):
 		return self.label
@@ -38,7 +39,9 @@ class Message(models.Model):
 	def as_dict(self):
 		return {'id': self.id, 'handle': self.handle, 'message': self.message, 'timestamp': self.formatted_timestamp}
 		
-		
-		
-		
-		
+class UsersInThisRoom(models.Model): #only used if the room is private
+	room = models.ForeignKey(Room, related_name='whiteListUsers')
+	handle = models.TextField() #user's name
+	
+	
+	

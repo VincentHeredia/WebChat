@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>WebChat</title>
+	{% load staticfiles %}
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" type="text/css" href="{% static 'chat/roomStyle.css' %}">
+	<script src="{% static 'chat/jquery-1.12.3.js' %}"></script>
+	<script src="{% static 'chat/roomSelect.js' %}"></script>
+</head>
+<body>
+	<div id="wrapper">
+		<section id="roomsSelectionWindow">
+			<div id="topInfo">
+				<div id="nameDisplay">Name: {{userName}}</div>
+				<div id="logout"><a href="/logout">Logout</a></div>
+			</div>
+			{% if urlOrigin == "invaliduser" %}
+			<div>
+				<p class="error">You are not allowed in this room</p>
+			</div>
+			{% endif %}
+			<div id="options">
+				<div id="createRoom"><a href="/chat/createroom">Create Room</a></div>
+			</div>
+			<div id="roomsList">
+				<h2>Private Rooms</h2>
+				 <div id="privateRoomsList">
+					 <ul>
+					 {% for privRooms in privateRooms %}
+						<li>
+							<span class="roomListing">Name: {{ privRooms.name }}
+							<a class="roomLink" id="room{{ privRooms.id }}" href="#">Join</a></span>
+						</li>
+					{% endfor %}
+					</ul>
+				 </div>
+				 <h2>Public Rooms</h2>
+				 <div id="publicRoomsList">
+					<ul>
+					 {% for pubRooms in publicRooms %}
+						<li>
+							<span class="roomListing">Name: {{ pubRooms.name }}
+							<a class="roomLink" id="room{{ pubRooms.id }}" href="#">Join</a></span>
+						</li>
+					{% endfor %}
+					</ul>
+				 </div>
+			</div>
+		</section>
+	</div>
+</body>
+</html>

@@ -9,7 +9,7 @@ from django.contrib.auth.forms import UserCreationForm
 
 def login(request):
 	if request.user.is_authenticated():
-		return HttpResponseRedirect('/chat')
+		return HttpResponseRedirect('/chat/loggedin')
 	
 	c = {}
 	c.update(csrf(request))
@@ -33,7 +33,7 @@ def auth_view(request):
 		return HttpResponseRedirect('/invalid')
 	
 def loggedin(request):
-	return HttpResponseRedirect('/chat')
+	return HttpResponseRedirect('/chat/loggedin')
 	
 def logout(request):
 	auth.logout(request)
@@ -42,7 +42,7 @@ def logout(request):
 #Check information
 def register(request):
 	if request.user.is_authenticated():
-		return HttpResponseRedirect('/chat')
+		return HttpResponseRedirect('/chat/loggedin')
 
 	c = {}
 	c.update(csrf(request))
