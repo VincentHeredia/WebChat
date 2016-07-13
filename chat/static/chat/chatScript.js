@@ -57,6 +57,34 @@ $(function() {
 		chatSocket.send(JSON.stringify(message));
 	});
 	
+	$(".addUserButton").click(function(){
+		var addedUser = prompt("Please enter the user's name", "");
+		if(addedUser != ""){
+			console.log(addedUser);
+			console.log(this.id.substring(7,this.id.length));
+			var message = {
+				message: "",
+				funct: "addUser",
+				id: this.id.substring(7,this.id.length)
+			};
+			chatSocket.send(JSON.stringify(message));
+		}
+	});
+	
+	$(".deleteRoomButton").click(function(){
+		var selection = confirm("Are you sure you want to delete this room?");
+		if(selection == true){
+			console.log("delete room");
+			console.log(this.id.substring(10,this.id.length));
+			var message = {
+				message: "",
+				funct: "deleteRoom",
+				id: this.id.substring(10,this.id.length)
+			};
+			chatSocket.send(JSON.stringify(message));
+		}
+	});
+	
 	//send a message
 	function sendSocketMessage(){
 		var message = {

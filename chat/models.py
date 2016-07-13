@@ -19,6 +19,7 @@ class Room(models.Model):
 	name = models.TextField(unique=True)
 	label = models.SlugField()
 	type = models.TextField(default="private") # private or public
+	roomAdmin = models.TextField(default="steve")
 	
 	def __str__(self):
 		return self.label

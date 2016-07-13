@@ -35,7 +35,9 @@ def ws_message(message):
 	msg = json.loads(message['text'])['message'].strip()
 	funct = json.loads(message['text'])['funct'].strip()
 	
-	if funct and message.user.is_superuser: #if this is not a chat message and user is an admin
+	username = message.user.username
+	userAdminName = room.roomAdmin
+	if funct and (message.user.is_superuser or userAdminName == username): #if this is not a chat message and user is an admin
 		if funct == "delete":
 			deleteId = json.loads(message['text'])['id'].strip()
 			room.messages.get(id=deleteId).delete()
@@ -47,6 +49,10 @@ def ws_message(message):
 				"text": json.dumps(deleteMsg), # convert to string
 			})
 			return # no message to process, return
+		elif funct == "addUser":
+			print("addUser")#templine
+		elif funct == "deleteRoom":
+			print("deleteRoom")#templine
 	else:
 		return # do nothing, user is not an admin
 	
@@ -55,7 +61,7 @@ def ws_message(message):
 		return #do nothing, message is blank
 	
 	if message.user.is_authenticated():
-		m = room.messages.create(handle=message.user.username, message=msg)
+		m = room.messages.create(handle=username, message=msg)
 	else:
 		return
 	

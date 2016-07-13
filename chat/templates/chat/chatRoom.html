@@ -13,7 +13,6 @@
 		var chatSocket = new ReconnectingWebSocket(ws_scheme + '://' + window.location.host + "/chatsocket/{{ roomId }}/?session_key={{ request.session.session_key }}");
 	</script>
 	<script src="{% static 'chat/chatScript.js' %}"></script>
-	
 </head>
 <body>
 	<div id="wrapper">
@@ -22,15 +21,22 @@
 				<div id="topInfo">
 					<div id="nameDisplay">Name: {{userName}}</div>
 					<div id="logout"><a id="nameDisplay" href="/logout">Logout</a></div>
+					{% if userAdmin or user.is_superuser %}
+						<div id="adminDropdownMenu">
+							<ul>
+								<li><a id="addUser{{ roomId }}" class="addUserButton" href="#">Allow User</a></li>
+								<li><a id="deleteRoom{{ roomId }}" class="deleteRoomButton" href="#">Delete Room</a></li>
+							</ul>
+						</div>
+					{% endif %}
 				</div>
-				
 				<div id="chatEle">
 				{% for message in messages %}
 					<div class="message" id="message{{ message.id }}">
 						<div class="chatTime">{{ message.formatted_timestamp }},</div>
 						<div class="chatUserName">{{ message.handle }}:</div>
 						<div class="chatMessage">{{ message.message }}</div>
-						{% if user.is_superuser %}
+						{% if userAdmin or user.is_superuser %}
 							<div class="deleteOption">
 								<a class="deleteInput" id="delete{{ message.id }}" href="#">Delete</a>
 							</div>
