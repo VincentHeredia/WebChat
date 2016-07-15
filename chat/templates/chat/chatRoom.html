@@ -20,13 +20,15 @@
 			<div id="outerChatLayer">
 				<div id="topInfo">
 					<div id="nameDisplay">Name: {{userName}}</div>
-					<div id="logout"><a id="nameDisplay" href="/logout">Logout</a></div>
+					<div id="logout"><a href="/chat/loggedin">Back</a> <a href="/logout">Logout</a></div>
 					{% if userAdmin or user.is_superuser %}
-						<div id="adminDropdownMenu">
-							<ul>
-								<li><a id="addUser{{ roomId }}" class="addUserButton" href="#">Allow User</a></li>
-								<li><a id="deleteRoom{{ roomId }}" class="deleteRoomButton" href="#">Delete Room</a></li>
-							</ul>
+						<div class="dropdown">
+							<button class="dropbtn">Options</button>
+							<div class="dropdown-content">
+								<a class="addUserButton" href="#">Allow User</a>
+								<a class="removeUserButton" href="#">Remove User</a>
+								<a class="deleteRoomButton" href="#">Delete Room</a>
+							</div>
 						</div>
 					{% endif %}
 				</div>

@@ -49,10 +49,21 @@ def ws_message(message):
 				"text": json.dumps(deleteMsg), # convert to string
 			})
 			return # no message to process, return
+			
 		elif funct == "addUser":
-			print("addUser")#templine
+			addUser = json.loads(message['text'])['message'].strip()
+			newUser = room.whiteListUsers.create(handle=addUser)
+			return # no message to process, return
+			
+		elif funct == "removeUser":
+			removeUser = json.loads(message['text'])['message'].strip()
+			room.whiteListUsers.get(handle=removeUser).delete()
+			return # redirect users to the chat room selection
+			
 		elif funct == "deleteRoom":
-			print("deleteRoom")#templine
+			room.delete()
+			return # redirect users to the chat room selection
+			
 	else:
 		return # do nothing, user is not an admin
 	

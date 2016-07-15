@@ -51,8 +51,7 @@ $(function() {
 	$(".deleteInput").click(function(){
 		var message = {
 			message: "",
-			funct: "delete",
-			id: this.id.substring(6,this.id.length)
+			funct: "delete"
 		};
 		chatSocket.send(JSON.stringify(message));
 	});
@@ -60,12 +59,20 @@ $(function() {
 	$(".addUserButton").click(function(){
 		var addedUser = prompt("Please enter the user's name", "");
 		if(addedUser != ""){
-			console.log(addedUser);
-			console.log(this.id.substring(7,this.id.length));
 			var message = {
-				message: "",
-				funct: "addUser",
-				id: this.id.substring(7,this.id.length)
+				message: addedUser,
+				funct: "addUser"
+			};
+			chatSocket.send(JSON.stringify(message));
+		}
+	});
+	
+	$(".removeUserButton").click(function(){
+		var removeUser = prompt("Please enter the user's name", "");
+		if(removeUser != ""){
+			var message = {
+				message: removeUser,
+				funct: "removeUser"
 			};
 			chatSocket.send(JSON.stringify(message));
 		}
